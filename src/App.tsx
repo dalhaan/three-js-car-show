@@ -1,9 +1,10 @@
 import { Suspense } from "react";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls, PerspectiveCamera, Stats } from "@react-three/drei";
-import { useControls, folder } from "leva";
+import { useControls } from "leva";
 import { Ground } from "./Ground";
 import { Car } from "./Car";
+import { Rings } from "./Rings";
 
 function CarShow() {
   return (
@@ -16,6 +17,7 @@ function CarShow() {
       <color args={[0, 0, 0]} attach="background" />
 
       <Car />
+      <Rings />
 
       {/* Lighting */}
       <spotLight
