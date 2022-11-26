@@ -1,33 +1,11 @@
 import { Suspense } from "react";
 import { Canvas } from "@react-three/fiber";
-import { OrbitControls, PerspectiveCamera } from "@react-three/drei";
+import { OrbitControls, PerspectiveCamera, Stats } from "@react-three/drei";
 import { useControls, folder } from "leva";
 import { Ground } from "./Ground";
+import { Car } from "./Car";
 
 function CarShow() {
-  const { r, g, b } = useControls({
-    cubeColor: folder({
-      r: {
-        value: 1,
-        min: 0,
-        max: 1,
-        step: 0.05,
-      },
-      g: {
-        value: 0,
-        min: 0,
-        max: 1,
-        step: 0.05,
-      },
-      b: {
-        value: 0,
-        min: 0,
-        max: 1,
-        step: 0.05,
-      },
-    }),
-  });
-
   return (
     <>
       <OrbitControls target={[0, 0.35, 0]} maxPolarAngle={1.45} />
@@ -36,6 +14,8 @@ function CarShow() {
 
       {/* Set background colour */}
       <color args={[0, 0, 0]} attach="background" />
+
+      <Car />
 
       {/* Lighting */}
       <spotLight
@@ -57,21 +37,21 @@ function CarShow() {
         shadow-bias={-0.0001}
       />
 
-      <mesh>
-        <boxGeometry args={[1, 1, 1]} />
-        <meshBasicMaterial color={[r, g, b]} />
-      </mesh>
-
       <Ground />
     </>
   );
 }
 
 function App() {
+  const { showStats } = useControls({
+    showStats: true,
+  });
+
   return (
     <Suspense fallback={null}>
       <Canvas shadows>
         <CarShow />
+        {showStats ? <Stats /> : null}
       </Canvas>
     </Suspense>
   );
