@@ -2,12 +2,23 @@ import { useLoader } from "@react-three/fiber";
 import { useEffect } from "react";
 import { Mesh } from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
+import { useControls, folder } from "leva";
 
 export function Car() {
+  const { carIsVisible } = useControls({
+    car: folder({
+      carIsVisible: {
+        label: "visible",
+        value: true,
+      },
+    }),
+  });
+
   const gltf = useLoader(GLTFLoader, "models/car/scene.gltf");
 
   // Configure GLTF model for scene
   useEffect(() => {
+    gltf.scene.visible = carIsVisible;
     gltf.scene.scale.set(0.005, 0.005, 0.005);
     gltf.scene.position.set(0, -0.035, 0);
     gltf.scene.traverse((object) => {
@@ -18,6 +29,10 @@ export function Car() {
       }
     });
   }, [gltf]);
+
+  useEffect(() => {
+    gltf.scene.visible = carIsVisible;
+  }, [gltf, carIsVisible]);
 
   return <primitive object={gltf.scene} />;
 }

@@ -17,8 +17,13 @@ export function Rings() {
     ringsScaleFalloff,
     ringsIntensityFalloff,
     ringsIntensityMul,
+    ringsIsVisible,
   } = useControls({
     rings: folder({
+      ringsIsVisible: {
+        label: "visible",
+        value: true,
+      },
       noRings: {
         label: "count",
         value: 14,
@@ -93,7 +98,7 @@ export function Rings() {
   });
 
   return (
-    <>
+    <group visible={ringsIsVisible}>
       {Array.from({ length: noRings }, (_, index) => (
         <mesh
           key={`ring-${index}`}
@@ -106,6 +111,6 @@ export function Rings() {
           <meshStandardMaterial emissive={[0.5, 0.5, 0.5]} color={[0, 0, 0]} />
         </mesh>
       ))}
-    </>
+    </group>
   );
 }
