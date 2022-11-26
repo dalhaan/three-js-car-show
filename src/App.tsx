@@ -1,6 +1,12 @@
 import { Suspense } from "react";
 import { Canvas } from "@react-three/fiber";
-import { OrbitControls, PerspectiveCamera, Stats } from "@react-three/drei";
+import {
+  CubeCamera,
+  Environment,
+  OrbitControls,
+  PerspectiveCamera,
+  Stats,
+} from "@react-three/drei";
 import { useControls } from "leva";
 import { Ground } from "./Ground";
 import { Car } from "./Car";
@@ -16,7 +22,14 @@ function CarShow() {
       {/* Set background colour */}
       <color args={[0, 0, 0]} attach="background" />
 
-      <Car />
+      <CubeCamera resolution={256} frames={Infinity}>
+        {(texture) => (
+          <>
+            <Environment map={texture} />
+            <Car />
+          </>
+        )}
+      </CubeCamera>
       <Rings />
 
       {/* Lighting */}

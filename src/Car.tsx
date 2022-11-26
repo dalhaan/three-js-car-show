@@ -30,6 +30,7 @@ export function Car() {
     });
   }, [gltf]);
 
+  // Update car visibility
   useEffect(() => {
     gltf.scene.visible = carIsVisible;
   }, [gltf, carIsVisible]);
