@@ -1,6 +1,7 @@
 import { useFrame } from "@react-three/fiber";
 import { useRef, useState } from "react";
 import { Mesh, BufferGeometry, Material, Vector3, Color } from "three";
+import { useControls, folder } from "leva";
 
 function Box({ colour }: { colour: [number, number, number] }) {
   const box = useRef<Mesh<BufferGeometry, Material | Material[]> | null>(null);
@@ -62,14 +63,20 @@ function Box({ colour }: { colour: [number, number, number] }) {
 }
 
 export function Boxes() {
+  const { boxesIsVisible } = useControls({
+    boxes: folder({
+      boxesIsVisible: true,
+    }),
+  });
+
   return (
-    <>
+    <group visible={boxesIsVisible}>
       {Array.from({ length: 100 }, (_, index) => (
         <Box
           key={`box-${index}`}
           colour={index % 2 === 0 ? [0.4, 0.1, 0.1] : [0.05, 0.15, 0.4]}
         />
       ))}
-    </>
+    </group>
   );
 }
