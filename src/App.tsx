@@ -2,6 +2,7 @@ import { Suspense } from "react";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls, PerspectiveCamera } from "@react-three/drei";
 import { useControls, folder } from "leva";
+import { Ground } from "./Ground";
 
 function CarShow() {
   const { r, g, b } = useControls({
@@ -60,6 +61,8 @@ function CarShow() {
         <boxGeometry args={[1, 1, 1]} />
         <meshBasicMaterial color={[r, g, b]} />
       </mesh>
+
+      <Ground />
     </>
   );
 }
