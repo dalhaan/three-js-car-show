@@ -9,6 +9,7 @@ specifiers:
   '@types/three': ^0.146.0
   '@vitejs/plugin-react': ^2.2.0
   leva: ^0.9.34
+  postprocessing: ^6.29.1
   react: ^18.2.0
   react-dom: ^18.2.0
   three: ^0.146.0
@@ -19,6 +20,7 @@ dependencies:
   '@react-three/drei': 9.43.3_xwynmv5llzsuuouxruzymqw67e
   '@react-three/fiber': 8.9.1_mjlgqb43i6mvslmnwgzrdumoh4
   '@react-three/postprocessing': 2.7.0_aj5kj473hsgheg4miwvuwybosy
+  postprocessing: 6.29.1_three@0.146.0
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
   three: 0.146.0

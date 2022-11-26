@@ -7,11 +7,18 @@ import {
   PerspectiveCamera,
   Stats,
 } from "@react-three/drei";
+import {
+  EffectComposer,
+  Bloom,
+  ChromaticAberration,
+} from "@react-three/postprocessing";
+import { BlendFunction } from "postprocessing";
 import { useControls } from "leva";
 import { Ground } from "./Ground";
 import { Car } from "./Car";
 import { Rings } from "./Rings";
 import { Boxes } from "./Boxes";
+import { Vector2 } from "three";
 
 function CarShow() {
   return (
@@ -55,6 +62,23 @@ function CarShow() {
       />
 
       <Ground />
+
+      {/* Post processing */}
+      <EffectComposer>
+        <Bloom
+          blendFunction={BlendFunction.ADD}
+          intensity={1.3}
+          width={300}
+          height={300}
+          kernelSize={5}
+          luminanceThreshold={0.15}
+          luminanceSmoothing={0.025}
+        />
+        <ChromaticAberration
+          blendFunction={BlendFunction.NORMAL}
+          offset={new Vector2(0.0005, 0.0012)}
+        />
+      </EffectComposer>
     </>
   );
 }
