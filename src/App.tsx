@@ -13,14 +13,73 @@ import {
   ChromaticAberration,
 } from "@react-three/postprocessing";
 import { BlendFunction } from "postprocessing";
-import { useControls } from "leva";
+import { useControls, folder } from "leva";
 import { Ground } from "./Ground";
 import { Car } from "./Car";
 import { Rings } from "./Rings";
 import { Boxes } from "./Boxes";
 import { Vector2 } from "three";
+import { FloatingGrid } from "./FloatingGrid";
 
 function CarShow() {
+  const {
+    bloomIntensity,
+    bloomSize,
+    bloomKernelSize,
+    bloomLuminanceThreshold,
+    chromaticAberrationOffsetX,
+    chromaticAberrationOffsetY,
+  } = useControls({
+    effects: folder({
+      bloom: folder({
+        bloomIntensity: {
+          label: "intensity",
+          value: 1.3,
+          min: 0,
+          max: 5,
+          step: 0.01,
+        },
+        bloomSize: {
+          label: "size",
+          value: 300,
+          min: 0,
+          max: 500,
+          step: 1,
+        },
+        bloomKernelSize: {
+          label: "kernel size",
+          value: 5,
+          min: 0,
+          max: 5,
+          step: 1,
+        },
+        bloomLuminanceThreshold: {
+          label: "luminance threshold",
+          value: 0.15,
+          min: 0,
+          max: 1,
+          step: 0.01,
+        },
+      }),
+      chromaticAberration: folder({
+        chromaticAberrationOffsetX: {
+          label: "x offset",
+          value: 0.0005,
+          min: 0,
+          max: 1,
+          step: 0.00001,
+        },
+        chromaticAberrationOffsetY: {
+          label: "y offset",
+          value: 0.0012,
+          min: 0,
+          max: 1,
+          step: 0.00001,
+        },
+      }),
+    }),
+  });
+
   return (
     <>
       <OrbitControls target={[0, 0.35, 0]} maxPolarAngle={1.45} />
@@ -40,6 +99,7 @@ function CarShow() {
       </CubeCamera>
       <Rings />
       <Boxes />
+      <FloatingGrid />
 
       {/* Lighting */}
       <spotLight
@@ -67,16 +127,18 @@ function CarShow() {
       <EffectComposer>
         <Bloom
           blendFunction={BlendFunction.ADD}
-          intensity={1.3}
-          width={300}
-          height={300}
-          kernelSize={5}
-          luminanceThreshold={0.15}
+          intensity={bloomIntensity}
+          width={bloomSize}
+          height={bloomSize}
+          kernelSize={bloomKernelSize}
+          luminanceThreshold={bloomLuminanceThreshold}
           luminanceSmoothing={0.025}
         />
         <ChromaticAberration
           blendFunction={BlendFunction.NORMAL}
-          offset={new Vector2(0.0005, 0.0012)}
+          offset={
+            new Vector2(chromaticAberrationOffsetX, chromaticAberrationOffsetY)
+          }
         />
       </EffectComposer>
     </>
